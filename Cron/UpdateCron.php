@@ -1,28 +1,25 @@
 <?php
 
-
 namespace Ghratzoo\Covid\Cron;
-
 
 use Psr\Log\LoggerInterface;
 
-class CleanTableCronjob
+class UpdateCron
 {
 
     /**
      * @var LoggerInterface
      */
-    protected LoggerInterface $logger;
+    private LoggerInterface $logger;
 
     /**
-     * CleanTableCronjob constructor.
+     * UpdateCron constructor.
      * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
-
 
     /**
      * Cronjob Description
@@ -31,6 +28,10 @@ class CleanTableCronjob
      */
     public function execute(): void
     {
-        $this->logger->info('Cron Works');
+        $this->logger->info('Covid Update Start');
+
+        shell_exec('php bin/magento covid:update');
+
+        $this->logger->info('Covid Update Stop');
     }
 }
