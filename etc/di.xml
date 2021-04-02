@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Ghratzoo\Covid\Api\Data\CovidInterface" type="Ghratzoo\Covid\Model\Covid"/>
+    <preference for="Ghratzoo\Covid\Api\Data\CovidSearchResultInterface" type="Ghratzoo\Covid\Model\ResourceModel\Covid\Collection"/>
+    <preference for="Ghratzoo\Covid\Api\CovidManagementInterface" type="Ghratzoo\Covid\Service\CovidManagement"/>
+    <preference for="Ghratzoo\Covid\Api\CovidRepositoryInterface" type="Ghratzoo\Covid\Service\CovidRepository"/>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="ghratzoo_covid_covid_init" xsi:type="object">Ghratzoo\Covid\Console\Command\CovidInit</item>
+                <item name="ghratzoo_covid_covid_update" xsi:type="object">Ghratzoo\Covid\Console\Command\CovidUpdate
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
+

@@ -1,0 +1,14 @@
+{
+    "ghratzoo_covid": {
+        "column": {
+            "covid_id": true,
+            "confirmed": true,
+            "deaths": true,
+            "recovered": true,
+            "date": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
