@@ -104,7 +104,7 @@ class CovidInit extends Command
                 $covid->setConfirmed($item->Confirmed);
                 $covid->setDeaths($item->Deaths);
                 $covid->setRecovered($item->Recovered);
-                $covid->setDate(new \DateTime($item->Date));
+                $covid->setDate($item->Date);
                 $this->covidManagement->save($covid);
             }
         }

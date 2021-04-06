@@ -129,25 +129,28 @@ define([
                 },
 
                 initObservable: function () {
-                    this._super().observe(['labelsLine', 'confirmed', 'deaths', 'recovered']);
+                    this._super().observe(['labelsLine', 'confirmed', 'deaths', 'recovered', 'activeCases']);
                     const self = this;
                     covidService.getList().then(function (covids) {
                         let labels = [];
                         let confirmed = [];
                         let deaths = [];
-                        let recovered = []
+                        let recovered = [];
+                        let activeCases = [];
 
                         for (let i = 0; i < covids.length; i++) {
                             labels.push(covids[i].date.split(" ")[0]);
                             confirmed.push(covids[i].confirmed);
                             deaths.push(covids[i].deaths);
                             recovered.push(covids[i].recovered)
+                            activeCases.push(covids[i].confirmed - covids[i].recovered - covids[i].deaths);
                         }
 
                         self.labelsLine(labels);
                         self.confirmed(confirmed)
                         self.deaths(deaths)
                         self.recovered(recovered)
+                        self.activeCases(activeCases)
                         return covids;
                     });
                     return this;
@@ -160,6 +163,7 @@ define([
                     this.confirmed = ko.observable([]);
                     this.deaths = ko.observable([]);
                     this.recovered = ko.observable([]);
+                    this.activeCases = ko.observable([]);
 
                     this.CovidData = {
                         labels: this.labelsLine,
@@ -171,6 +175,7 @@ define([
                                 pointColor: "rgba(220,220,220,1)",
                                 pointStrokeColor: "#fff",
                                 pointHighlightFill: "#fff",
+                                pointRadius: 0,
                                 pointHighlightStroke: "rgba(220,220,220,1)",
                                 data: this.confirmed
                             },
@@ -181,6 +186,7 @@ define([
                                 pointColor: "rgba(0,255,0,1)",
                                 pointStrokeColor: "#fff",
                                 pointHighlightFill: "#fff",
+                                pointRadius: 0,
                                 pointHighlightStroke: "rgba(0,255,0,1)",
                                 data: this.recovered
                             },
@@ -191,8 +197,20 @@ define([
                                 pointColor: "rgba(255,0,0,1)",
                                 pointStrokeColor: "#fff",
                                 pointHighlightFill: "#fff",
+                                pointRadius: 0,
                                 pointHighlightStroke: "rgba(255,0,0,1)",
                                 data: this.deaths
+                            },
+                            {
+                                label: "Active",
+                                backgroundColor: "rgba(0,0,255,0.2)",
+                                borderColor: "rgba(0,0,255,1)",
+                                pointColor: "rgba(0,0,255,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointRadius: 0,
+                                pointHighlightStroke: "rgba(0,0,255,1)",
+                                data: this.activeCases
                             }
                         ]
                     };
