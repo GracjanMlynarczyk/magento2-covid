@@ -1,0 +1,11 @@
+<!-- ko if: ($data.labelsLine().length > 0) -->
+<div id="covid">
+    <canvas id="covid-chart"
+            data-bind="chart: { type: 'line', data: CovidData, options: { observeChanges: true, throttle: 1000 } }"></canvas>
+</div>
+<!-- /ko -->
+
+<!-- ko if: ($data.labelsLine().length === 0) -->
+    <h2>Loading...</h2>
+<!-- /ko -->
+

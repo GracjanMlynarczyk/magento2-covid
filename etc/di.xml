@@ -4,6 +4,7 @@
     <preference for="Ghratzoo\Covid\Api\Data\CovidSearchResultInterface" type="Ghratzoo\Covid\Model\ResourceModel\Covid\Collection"/>
     <preference for="Ghratzoo\Covid\Api\CovidManagementInterface" type="Ghratzoo\Covid\Service\CovidManagement"/>
     <preference for="Ghratzoo\Covid\Api\CovidRepositoryInterface" type="Ghratzoo\Covid\Service\CovidRepository"/>
+    <preference for="Ghratzoo\Covid\Api\CovidsGetListInterface" type="Ghratzoo\Covid\Service\CovidsGetList"/>
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>
             <argument name="commands" xsi:type="array">

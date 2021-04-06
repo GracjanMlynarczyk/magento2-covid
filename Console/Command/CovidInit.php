@@ -3,6 +3,7 @@
 namespace Ghratzoo\Covid\Console\Command;
 
 use Exception;
+use Ghratzoo\Covid\Api\CovidsGetListInterface;
 use Ghratzoo\Covid\Api\Data\CovidInterfaceFactory;
 use Ghratzoo\Covid\Service\CovidManagement;
 use Ghratzoo\Covid\Service\CovidRepository;
@@ -15,9 +16,9 @@ class CovidInit extends Command
 {
 
     /**
-     * @var CovidRepository
+     * @var CovidsGetListInterface
      */
-    private CovidRepository $covidRepository;
+    private CovidsGetListInterface $covidsGetList;
 
     /**
      * @var CovidManagement
@@ -36,21 +37,21 @@ class CovidInit extends Command
 
     /**
      * CovidInit constructor.
-     * @param CovidRepository $covidRepository
+     * @param CovidsGetListInterface $covidsGetList
      * @param CovidManagement $covidManagement
      * @param Client $client
      * @param CovidInterfaceFactory $covidInterface
      * @param string|null $name
      */
     public function __construct(
-        CovidRepository $covidRepository,
+        CovidsGetListInterface $covidsGetList,
         CovidManagement $covidManagement,
         Client $client,
         CovidInterfaceFactory $covidInterface,
         string $name = null
     ) {
         $this->covidManagement = $covidManagement;
-        $this->covidRepository = $covidRepository;
+        $this->covidsGetList = $covidsGetList;
         $this->client = $client;
         $this->covidInterface = $covidInterface;
         parent::__construct($name);
@@ -80,8 +81,22 @@ class CovidInit extends Command
     {
         $output->writeln("Covid init start :)");
 
+        $output->writeln("Delete old records");
+
+        $covids = $this->covidsGetList->getList();
+
+        foreach ($covids as $covid) {
+            $this->covidManagement->delete($covid);
+        }
+
+        $output->writeln("Complete delete old records");
+
+
+        $output->writeln("Start download data");
         $data = json_decode($this->client->get('https://api.covid19api.com/total/country/poland')->getBody()->getContents());
 
+        $output->writeln("Stop download data");
+        $output->writeln("Start insert data");
         foreach ($data as $item)
         {
             if ($item->Confirmed !== 0) {
@@ -93,6 +108,7 @@ class CovidInit extends Command
                 $this->covidManagement->save($covid);
             }
         }
+        $output->writeln("Stop insert data");
 
         $output->writeln("Covid init stop :)");
     }

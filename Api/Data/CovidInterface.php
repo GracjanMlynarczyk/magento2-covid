@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace Ghratzoo\Covid\Api\Data;
 
@@ -40,26 +39,31 @@ interface CovidInterface
 
     /**
      * @param int $id
+     * @return void
      */
     public function setCovidId(int $id): void;
 
     /**
      * @param int $confirmed
+     * @return void
      */
     public function setConfirmed(int $confirmed): void;
 
     /**
      * @param int $deaths
+     * @return void
      */
     public function setDeaths(int $deaths): void;
 
     /**
      * @param int $recovered
+     * @return void
      */
     public function setRecovered(int $recovered): void;
 
     /**
      * @param string $dateTime
+     * @return void
      */
     public function setDate(string $dateTime): void;
 }
